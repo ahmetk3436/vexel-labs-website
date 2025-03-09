@@ -1,38 +1,24 @@
 # Build stage
-FROM node:20-alpine AS builder
+FROM node:20-alpine as build
 
-# Set working directory
 WORKDIR /app
-
-# Copy package files
-COPY package.json yarn.lock ./
-
-# Install dependencies
-RUN yarn install --frozen-lockfile
-
-# Copy all files
+# Install yarn
+RUN apk add --no-cache yarn
+COPY package*.json ./
+RUN yarn install
 COPY . .
-
-# Build the app
 RUN yarn build
 
-# Runner stage
-FROM node:20-alpine AS runner
+# Production stage
+FROM nginx:alpine
 
-# Set working directory
-WORKDIR /app
+# Copy built assets from build stage
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy package files
-COPY package.json yarn.lock ./
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Install only production dependencies
-RUN yarn install --production --frozen-lockfile
+# Expose port 80
+EXPOSE 80
 
-# Copy built files from builder
-COPY --from=builder /app/dist ./dist
-
-# Expose Vite's preview port
-EXPOSE 4173
-
-# Start Vite in preview mode (production build)
-CMD ["yarn", "preview", "--host"] 
+CMD ["nginx", "-g", "daemon off;"]
