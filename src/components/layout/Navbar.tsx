@@ -1,9 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import ThemeToggle from "../ui/ThemeToggle";
 
+interface NavLinkProps {
+  href: string;
+  children: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}
+
+const NavLink = ({ href, children, onClick }: NavLinkProps) => (
+  <a
+    href={href}
+    onClick={onClick}
+    className="text-sm font-medium transition-colors hover:text-primary"
+  >
+    {children}
+  </a>
+);
+
 const Navbar = ({ scrollY = 0 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   
   // Navigation items
@@ -16,53 +32,47 @@ const Navbar = ({ scrollY = 0 }) => {
   ];
 
   // Change navbar style on scroll
-  useEffect(() => {
+  React.useEffect(() => {
     setIsScrolled(scrollY > 50);
   }, [scrollY]);
 
   // Handle smooth scrolling for anchor links
-  const handleNavClick = (e, href) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    scrollToSection(href);
+    setIsMobileMenuOpen(false);
+  };
+
+  const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
+      const offsetTop = element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth"
+        top: offsetTop - 100,
+        behavior: "smooth",
       });
-      setMobileMenuOpen(false);
     }
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-md shadow-lg py-4"
-          : "bg-transparent py-6"
+          ? "bg-background/80 backdrop-blur-sm shadow-sm"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center z-50">
-          <a href="#home" className="flex items-center" onClick={(e) => handleNavClick(e, "#home")}>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
-              Stardash<span className="text-primary">Tech</span>
-            </span>
-          </a>
-        </div>
+      <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="#home" className="text-xl font-bold">
+          StardashTech
+        </a>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-muted-foreground hover:text-foreground transition-colors relative group"
-            >
+            <NavLink key={item.name} href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
               {item.name}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-            </a>
+            </NavLink>
           ))}
           <ThemeToggle />
           <Button variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
@@ -70,58 +80,61 @@ const Navbar = ({ scrollY = 0 }) => {
           </Button>
         </div>
 
-        {/* Mobile menu button */}
-        <div className="flex items-center md:hidden space-x-4">
-          <ThemeToggle />
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="relative z-50 flex items-center p-2 text-foreground"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            <div className="flex flex-col items-end justify-center space-y-1.5">
-              <span
-                className={`block h-0.5 w-6 bg-current transform transition-all duration-300 ${
-                  mobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                }`}
-              ></span>
-              <span
-                className={`block h-0.5 w-4 bg-current transform transition-all duration-300 ${
-                  mobileMenuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              ></span>
-              <span
-                className={`block h-0.5 ${mobileMenuOpen ? "w-6" : "w-5"} bg-current transform transition-all duration-300 ${
-                  mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
-              ></span>
-            </div>
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        <div
-          className={`fixed inset-0 bg-background/90 backdrop-blur-lg flex flex-col justify-center items-center transition-all duration-300 z-40 ${
-            mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-          }`}
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <div className="flex flex-col items-center space-y-6 py-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="text-xl font-medium text-foreground hover:text-primary transition-colors"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            {isMobileMenuOpen ? (
+              <>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </>
+            ) : (
+              <>
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </>
+            )}
+          </svg>
+        </button>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border">
+            <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <NavLink key={item.name} href={item.href} onClick={(e) => handleNavClick(e, item.href)}>
+                  {item.name}
+                </NavLink>
+              ))}
+              <Button
+                variant="default"
+                className="w-full"
+                onClick={() => {
+                  scrollToSection("#contact");
+                  setIsMobileMenuOpen(false);
+                }}
               >
-                {item.name}
-              </a>
-            ))}
-            <Button variant="default" className="mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
-              Get a Quote
-            </Button>
+                Contact Us
+              </Button>
+            </div>
           </div>
-        </div>
-      </div>
-    </nav>
+        )}
+      </nav>
+    </header>
   );
 };
 
