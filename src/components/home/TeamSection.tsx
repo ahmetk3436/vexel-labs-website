@@ -45,6 +45,18 @@ const TeamSection = () => {
         github: "https://github.com/samuel-evans",
       },
     },
+      {
+      name: "Murat Demir",
+      role: "Co-Founder",
+      bio: "Leads financial planning and business development efforts, aligning growth strategies with operational execution.",
+      image: samuelImage,
+      initials: "SE",
+      socialLinks: {
+        linkedin: "https://www.linkedin.com/in/samuelevans34/",
+        twitter: "https://x.com/samuel_sy0",
+        github: "https://github.com/samuel-evans",
+      },
+    },
   ];
 
   return (
