@@ -53,9 +53,9 @@ const TeamSection = () => {
       image: muratImage,
       initials: "SE",
       socialLinks: {
-        linkedin: "https://www.linkedin.com/in/samuelevans34/",
-        twitter: "https://x.com/samuel_sy0",
-        github: "https://github.com/samuel-evans",
+        linkedin: "https://www.linkedin.com/in/muratdemir1616/",
+        twitter: "",
+        github: "",
       },
     },
   ];
