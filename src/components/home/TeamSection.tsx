@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ahmetImage from "../../assets/ahmet_coskun_kizilkaya.jpeg";
 import melihImage from "../../assets/melih_solakoglu.jpeg";
 import samuelImage from "../../assets/samuel_evans.jpeg";
+import samuelImage from "../../assets/murat.jpg";
 
 const TeamSection = () => {
   // Team members data
