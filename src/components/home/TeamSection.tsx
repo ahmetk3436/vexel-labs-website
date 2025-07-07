@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import ahmetImage from "../../assets/ahmet_coskun_kizilkaya.jpeg";
 import melihImage from "../../assets/melih_solakoglu.jpeg";
 import samuelImage from "../../assets/samuel_evans.jpeg";
-import samuelImage from "../../assets/murat.jpg";
+import muratImage from "../../assets/murat.jpg";
 
 const TeamSection = () => {
   // Team members data
@@ -50,7 +50,7 @@ const TeamSection = () => {
       name: "Murat Demir",
       role: "Co-Founder",
       bio: "Leads financial planning and business development efforts, aligning growth strategies with operational execution.",
-      image: samuelImage,
+      image: muratImage,
       initials: "SE",
       socialLinks: {
         linkedin: "https://www.linkedin.com/in/samuelevans34/",
