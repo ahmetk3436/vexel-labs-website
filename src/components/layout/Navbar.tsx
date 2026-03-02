@@ -25,8 +25,7 @@ const Navbar = ({ scrollY = 0 }) => {
   // Navigation items
   const navItems = [
     { name: "Home", href: "#home" },
-    { name: "Services", href: "#services" },
-    { name: "Case Studies", href: "#case-studies" },
+    { name: "Our Apps", href: "#case-studies" },
     { name: "Team", href: "#team" },
     { name: "Contact", href: "#contact" },
   ];
@@ -63,8 +62,8 @@ const Navbar = ({ scrollY = 0 }) => {
       }`}
     >
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="#home" className="text-xl font-bold">
-          StardashTech
+        <a href="#home" className="text-xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+          Vexel Labs
         </a>
 
         {/* Desktop Navigation */}
@@ -75,8 +74,8 @@ const Navbar = ({ scrollY = 0 }) => {
             </NavLink>
           ))}
           <ThemeToggle />
-          <Button variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            Get a Quote
+          <Button variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => scrollToSection("#contact")}>
+            Get in Touch
           </Button>
         </div>
 

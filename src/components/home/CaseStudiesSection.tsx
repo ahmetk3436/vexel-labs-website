@@ -1,42 +1,48 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 
 const CaseStudiesSection = () => {
-  // Mock case studies data
-  const caseStudies = [
+  const apps = [
     {
-      title: "AI-Powered Content Generation Platform",
-      client: "SuperAI",
-      description: "Developed an advanced AI platform that generates high-quality content across multiple formats, resulting in 80% reduction in content creation time and improved engagement.",
-      tags: ["AI", "Machine Learning", "Content Generation", "Mobile App"],
-      image: "bg-gradient-to-br from-blue-500/20 to-purple-600/20",
+      emoji: "💜",
+      name: "MoodPulse",
+      tagline: "Emotion tracker",
+      description: "Track your mood throughout the day with 8 nuanced emotions. Get weekly insights, spot patterns, and understand what affects your mental state — privately, with no data leaving your device.",
+      tags: ["Mood Tracking", "Weekly Insights", "Privacy-First", "Subscription"],
+      gradient: "bg-gradient-to-br from-violet-500/20 to-purple-600/20",
+      border: "border-violet-500/20",
       stats: [
-        { label: "Time Reduction", value: "80%" },
-        { label: "Content Quality Score", value: "95%" },
+        { label: "Emotions tracked", value: "8+" },
+        { label: "Languages", value: "10" },
       ],
+      status: "In Development",
     },
     {
-      title: "Emotion Recognition System",
-      client: "EmotionSense",
-      description: "Created an innovative emotion recognition system using computer vision and machine learning to analyze facial expressions and voice patterns in real-time.",
-      tags: ["Computer Vision", "AI", "Machine Learning", "Mobile App"],
-      image: "bg-gradient-to-br from-green-500/20 to-blue-600/20",
+      emoji: "📘",
+      name: "Daiyly",
+      tagline: "Daily journal",
+      description: "A minimal journaling app with a clean daily writing flow, streak tracking, and mood context. No templates, no prompts — just a quiet space to write what matters.",
+      tags: ["Journaling", "Streak Tracking", "Minimal", "Subscription"],
+      gradient: "bg-gradient-to-br from-blue-500/20 to-blue-600/20",
+      border: "border-blue-500/20",
       stats: [
-        { label: "Accuracy Rate", value: "98%" },
-        { label: "Processing Speed", value: "5ms" },
+        { label: "Writing focus", value: "Daily" },
+        { label: "Languages", value: "10" },
       ],
+      status: "In Development",
     },
     {
-      title: "Financial Analytics Dashboard",
-      client: "FinTech Solutions",
-      description: "Built a comprehensive financial analytics dashboard with real-time data visualization, predictive analytics, and automated reporting capabilities for enterprise clients.",
-      tags: ["Web Application", "Financial Tech", "Data Analytics"],
-      image: "bg-gradient-to-br from-yellow-500/20 to-red-600/20",
+      emoji: "🌙",
+      name: "DriftOff",
+      tagline: "Sleep tracker · One-time purchase",
+      description: "Track your sleep quality, set smart alarms, and build better bedtime habits. One-time purchase, no subscriptions ever. Your sleep data stays on your phone.",
+      tags: ["Sleep Tracking", "Smart Alarm", "One-Time Purchase", "No Subscription"],
+      gradient: "bg-gradient-to-br from-indigo-800/40 to-indigo-900/40",
+      border: "border-indigo-500/20",
       stats: [
-        { label: "Data Processing", value: "2M+/day" },
-        { label: "User Satisfaction", value: "92%" },
+        { label: "Price", value: "$9.99" },
+        { label: "Languages", value: "10" },
       ],
+      status: "In Development",
     },
   ];
 
@@ -44,60 +50,40 @@ const CaseStudiesSection = () => {
     <section id="case-studies" className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Case Studies</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Apps</h2>
           <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
           <p className="text-lg text-muted-foreground">
-            Explore how we've helped businesses achieve their goals with innovative technology solutions.
+            Three focused apps. Each one built to do exactly one thing well, with privacy baked in from the start.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study, index) => (
-            <Card key={index} className="overflow-hidden group border border-border hover:shadow-lg transition-all">
-              <div className={`h-48 ${study.image} relative group-hover:opacity-90 transition-opacity`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-xl font-medium text-foreground bg-background/80 px-4 py-2 rounded">
-                    {study.client}
-                  </div>
+          {apps.map((app, index) => (
+            <div key={index} className={`${app.gradient} border ${app.border} rounded-2xl overflow-hidden group hover:shadow-lg transition-all flex flex-col`}>
+              <div className="p-8 flex-1">
+                <div className="text-5xl mb-4">{app.emoji}</div>
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="text-2xl font-bold">{app.name}</h3>
+                  <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">{app.status}</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">{app.tagline}</p>
+                <p className="text-sm text-foreground/80 leading-relaxed mb-6">{app.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {app.tags.map((tag, i) => (
+                    <Badge key={i} variant="outline" className="bg-background/30 text-xs">{tag}</Badge>
+                  ))}
                 </div>
               </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                  {study.title}
-                </CardTitle>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {study.tags.map((tag, i) => (
-                    <Badge key={i} variant="outline" className="bg-muted/50">{tag}</Badge>
-                  ))}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-muted-foreground">
-                  {study.description}
-                </CardDescription>
-                
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  {study.stats.map((stat, i) => (
-                    <div key={i} className="bg-muted/30 p-3 rounded text-center">
-                      <div className="text-xl font-bold text-primary">{stat.value}</div>
-                      <div className="text-xs text-muted-foreground">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full border-primary hover:bg-primary hover:text-primary-foreground transition-colors">
-                  View Case Study
-                </Button>
-              </CardFooter>
-            </Card>
+              <div className="border-t border-white/10 px-8 py-4 grid grid-cols-2 gap-4">
+                {app.stats.map((stat, i) => (
+                  <div key={i}>
+                    <div className="text-xl font-bold text-primary">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
-            View All Case Studies
-          </Button>
         </div>
       </div>
     </section>

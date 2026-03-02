@@ -67,7 +67,7 @@ const TeamSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Team</h2>
           <div className="h-1 w-20 bg-primary mx-auto mb-6"></div>
           <p className="text-lg text-muted-foreground">
-            Meet the talented professionals behind StardashTech's innovative solutions.
+            Meet the team building Vexel Labs from the ground up.
           </p>
         </div>
 

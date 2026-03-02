@@ -51,7 +51,7 @@ function App() {
 
   // Update document title
   useEffect(() => {
-    document.title = "StardashTech | Innovative Technology Solutions";
+    document.title = "Vexel Labs | Mobile Apps for Real Life";
   }, []);
 
   return (
