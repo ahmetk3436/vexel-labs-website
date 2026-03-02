@@ -28,7 +28,7 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://n8n.vexellabspro.com/webhook/contact-form", {
+      const res = await fetch("https://n8n.vexellabspro.com/webhook/ORWnGNYfsR4kwxCi/webhook/contact-form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
