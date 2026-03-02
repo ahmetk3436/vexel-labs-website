@@ -23,17 +23,28 @@ const ContactSection = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`;
-    const mailtoUrl = `mailto:hello@vexellabspro.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
-    window.open(mailtoUrl);
+    try {
+      const res = await fetch("https://n8n.vexellabspro.com/webhook/contact-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    toast.success("Your email client should have opened. Send the message from there.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
+      if (res.ok) {
+        toast.success("Message sent! We'll get back to you within 24–48 hours.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error("Something went wrong. Please email us directly at hello@vexellabspro.com");
+      }
+    } catch {
+      toast.error("Could not send message. Please email us at hello@vexellabspro.com");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -114,7 +125,7 @@ const ContactSection = () => {
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Opening email..." : "Send Message"}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </CardContent>
